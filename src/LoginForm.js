@@ -27,7 +27,7 @@ export default class LoginForm extends Component {
 
     render() {
         return (
-            <form>
+            <form action="#">
                 <label>
                     Username<br/>
 

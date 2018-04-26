@@ -50,7 +50,8 @@ export default class LoginForm extends Component {
                 <br/>
                 <br/>
 
-                <input type="submit" onClick={this.props.onSubmit}/>
+                <input type="submit"
+                       onClick={this.props.onSubmit.bind(this, this.state.username, this.state.password)}/>
             </form>
         )
     }

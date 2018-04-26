@@ -30,3 +30,11 @@
 .App-pagination {
     text-align: center;
 }
+
+.App-sizes-system {
+    float: left;
+}
+
+.App-sizes-gender {
+    float: right;
+}

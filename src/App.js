@@ -32,9 +32,9 @@ function getWidthColor(width) {
 function sizesResponseToChartData(payload) {
     const sizes = payload.sizes;
 
-    const labels = Object.keys(sizes);
+    const lengths = Object.keys(sizes);
 
-    const data = labels.reduce((accumulator, length, idx) => {
+    const data = lengths.reduce((accumulator, length, idx) => {
         const widthsByLength = sizes[length];
 
         Object.keys(widthsByLength).forEach(width => {
@@ -52,8 +52,13 @@ function sizesResponseToChartData(payload) {
         return accumulator;
     }, {});
 
+    // Explicit sorting is necessary, otherwise sizes with .5 increments would only show at the end.
+    lengths.sort((a, b) => {
+        return parseFloat(a) - parseFloat(b);
+    });
+
     return {
-        labels: labels,
+        labels: lengths,
         datasets: Object.values(data)
     };
 }
@@ -92,9 +97,15 @@ class App extends Component {
         req.done(response => {
             auth.valid = true;
 
-            const chartData = sizesResponseToChartData(response.data[0]);
+            const data = response.data[0];
+            const chartData = sizesResponseToChartData(data);
 
-            this.setState({auth, chartData});
+            this.setState({
+                auth,
+                chartData,
+                system: data.system,
+                gender: data.gender,
+            });
         });
 
         req.fail(() => {
@@ -106,13 +117,21 @@ class App extends Component {
         const req = nextSizes(this.state.auth);
 
         req.done(response => {
-            const chartData = sizesResponseToChartData(response.data[0]);
-            this.setState({chartData});
+            const data = response.data[0];
+            const chartData = sizesResponseToChartData(data);
+
+            this.setState({
+                chartData,
+                system: data.system,
+                gender: data.gender,
+            });
         });
     }
 
     render() {
         const auth = this.state.auth;
+        const system = this.state.system;
+        const gender = this.state.gender;
         const chartData = this.state.chartData;
         const chartOptions = this.state.chartOptions;
 
@@ -127,6 +146,14 @@ class App extends Component {
                     {auth.valid
                         ?
                         <div>
+                            <div className="App-sizes-system">
+                                {system}
+                            </div>
+
+                            <div className="App-sizes-gender">
+                                {gender}
+                            </div>
+
                             <Bar
                                 data={chartData}
                                 options={chartOptions}/>

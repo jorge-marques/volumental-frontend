@@ -16,7 +16,15 @@ export function fetchSizes(auth, page = null) {
         options.data = {page};
     }
 
-    return $.ajax(options);
+    const req = $.ajax(options);
+
+    req.fail(response => {
+        if (response.status === 503) {
+            window.alert('Could not retrieve sizes from server. Please try again later.')
+        }
+    });
+
+    return req;
 }
 
 // Handles pagination, cycling back to the first page when next-page is not included in the response.

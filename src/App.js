@@ -107,10 +107,6 @@ class App extends Component {
                 gender: data.gender,
             });
         });
-
-        req.fail(() => {
-            window.alert('Wrong credentials. Please try again.');
-        });
     }
 
     toNextPage() {

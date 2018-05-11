@@ -19,6 +19,11 @@ export function fetchSizes(auth, page = null) {
     const req = $.ajax(options);
 
     req.fail(response => {
+        if (response.status === 401) {
+            window.alert('Wrong credentials. Please try again.');
+            return;
+        }
+
         if (response.status === 503) {
             window.alert('Could not retrieve sizes from server. Please try again later.')
         }

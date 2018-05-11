@@ -2,8 +2,8 @@
     height: 80px;
 }
 
-.App-container, .App-header {
-    padding: 20px;
+.App-container {
+    padding: 20px 10%;
 }
 
 .App-header {
@@ -11,6 +11,7 @@
     background-color: white;
     height: 150px;
     color: #222;
+    padding: 20px;
 }
 
 .App-title {
@@ -29,6 +30,7 @@
 
 .App-pagination {
     text-align: center;
+    margin-top: 40px;
 }
 
 .App-sizes-system {

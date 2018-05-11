@@ -11,6 +11,7 @@ export default class LoginForm extends Component {
 
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleSubmission = this.handleSubmission.bind(this);
     }
 
     handleUsernameChange(evt) {
@@ -25,14 +26,20 @@ export default class LoginForm extends Component {
         });
     }
 
+    handleSubmission(evt) {
+        evt.preventDefault();
+        this.props.onSubmit(this.state.username, this.state.password)
+    }
+
     render() {
         return (
-            <form action="#">
+            <form>
                 <label>
                     Username<br/>
 
                     <input type="text"
                            value={this.state.username}
+                           required
                            onChange={this.handleUsernameChange}/>
                 </label>
 
@@ -44,14 +51,14 @@ export default class LoginForm extends Component {
 
                     <input type="password"
                            value={this.state.password}
+                           required
                            onChange={this.handlePasswordChange}/>
                 </label>
 
                 <br/>
                 <br/>
 
-                <input type="submit"
-                       onClick={this.props.onSubmit.bind(this, this.state.username, this.state.password)}/>
+                <input type="submit" onClick={this.handleSubmission}/>
             </form>
         )
     }
